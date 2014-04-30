@@ -62,9 +62,17 @@ void WindowSwitcher(Bitwise WindowSwitcherFlag)
 	}
 	else
 	{
-		if(remove("merch_req.png") == 0)
-			printf("merch_req.png deleted!\n");
-			
 		gtk_widget_hide(newQRwindow->window);	
+	}
+	
+	if(f_sending_window == TRUE)
+	{
+		gtk_widget_show(sendingWindow->window);
+		//~ build_and_send_absenData();
+		g_thread_new("send",build_and_send_absenData,NULL);
+	}
+	else
+	{
+		gtk_widget_hide(sendingWindow->window);
 	}
 }

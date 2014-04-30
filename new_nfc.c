@@ -1,7 +1,5 @@
 #include "header.h"
 
-static void kill_nfc_poll_process();
-
 /*
 We call init_mainmenu_window() when our program is starting to load 
 main menu window with references to Glade file. 
@@ -28,17 +26,6 @@ gboolean init_newnfc_window()
 	g_object_unref(G_OBJECT(builder));
 	
 	return TRUE;
-}
-
-void on_new_nfc_cancel_button_clicked()
-{
-	printf("cancel nfc clicked\n");
-	kill_nfc_poll_process();
-	
-	Bitwise WindowSwitcherFlag;
-	f_status_window = FALSE;	//hide all window
-	f_main_window = TRUE;		//show password window
-	WindowSwitcher(WindowSwitcherFlag);
 }
 
 static void kill_nfc_poll_process()
@@ -261,22 +248,11 @@ static gboolean cb_out_watch( GIOChannel *channel, GIOCondition cond, GString *d
 			{
 				if(parse_nfc_data(data) == TRUE)
 				{
-					char msgnotif[256];
-					sprintf(msgnotif, "kirim!\nACCN:%ju\nTimestamp:%lu\n",lastAbsentData.ACCNlong, lastAbsentData.TSlong);
-					notification_message(msgnotif);
-					
-					//~ if(write_lastTransaction_log() == TRUE)
-					//~ {
-						//~ //CREATE PDF HERE!!!
-						//~ create_receipt_from_lastTransactionData();
-						//~ parse_log_file_and_write_to_treeview(logNum(), logNum());
-						//~ 
-						//~ /*open receipt window and main menu*/
-						Bitwise WindowSwitcherFlag;
-						f_status_window = FALSE;
-						f_main_window = TRUE;
-						WindowSwitcher(WindowSwitcherFlag);
-					//~ }
+					Bitwise WindowSwitcherFlag;
+					f_status_window = FALSE;
+					f_sending_window = TRUE;
+					f_main_window = TRUE;
+					WindowSwitcher(WindowSwitcherFlag);
 				}
 			}
 			
@@ -330,7 +306,7 @@ void nfc_poll_child_process(gchar *SESN)
 
 	GString *data;
 	data = g_string_new(NULL);
-	printf("SESN: %s\n",SESN);
+
     /* Spawn child process */
     ret = g_spawn_async_with_pipes( NULL, argv, NULL,
                                     G_SPAWN_DO_NOT_REAP_CHILD, NULL,
@@ -356,4 +332,15 @@ void nfc_poll_child_process(gchar *SESN)
     g_io_add_watch( err_ch, G_IO_IN | G_IO_HUP, (GIOFunc)cb_err_watch, data );
     
     g_string_free(data,TRUE);
+}
+
+void on_new_nfc_cancel_button_clicked()
+{
+	printf("cancel nfc clicked\n");
+	kill_nfc_poll_process();
+	
+	Bitwise WindowSwitcherFlag;
+	f_status_window = FALSE;	//hide all window
+	f_main_window = TRUE;		//show password window
+	WindowSwitcher(WindowSwitcherFlag);
 }

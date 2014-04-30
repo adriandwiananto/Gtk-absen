@@ -6,7 +6,7 @@
     <property name="height_request">320</property>
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
-    <property name="window_position">center-on-parent</property>
+    <property name="window_position">center-always</property>
     <property name="has_resize_grip">False</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <signal name="delete-event" handler="gtk_main_quit" swapped="no"/>
@@ -66,7 +66,7 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center</property>
     <property name="has_resize_grip">False</property>
     <signal name="destroy" handler="gtk_widget_hide" swapped="no"/>
     <signal name="delete-event" handler="gtk_widget_hide" swapped="no"/>
@@ -149,7 +149,7 @@
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center</property>
     <property name="has_resize_grip">False</property>
     <signal name="destroy" handler="gtk_widget_hide" swapped="no"/>
     <signal name="delete-event" handler="gtk_widget_hide" swapped="no"/>
@@ -263,10 +263,10 @@
   </object>
   <object class="GtkWindow" id="registration_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Password</property>
+    <property name="title" translatable="yes">Registration</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center</property>
     <property name="has_resize_grip">False</property>
     <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
     <signal name="delete-event" handler="gtk_main_quit" swapped="no"/>
@@ -359,6 +359,55 @@
             <property name="top_attach">2</property>
             <property name="width">1</property>
             <property name="height">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="sending_window">
+    <property name="can_focus">False</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="has_resize_grip">False</property>
+    <child>
+      <object class="GtkBox" id="box1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="sending_label">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_top">30</property>
+            <property name="margin_bottom">30</property>
+            <property name="label" translatable="yes">Please wait while sending absen data to server</property>
+            <attributes>
+              <attribute name="font-desc" value="Sans Bold 16"/>
+            </attributes>
+            <signal name="destroy" handler="gtk_widget_hide" swapped="no"/>
+            <signal name="delete-event" handler="gtk_widget_hide" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSpinner" id="spinner1">
+            <property name="height_request">50</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_bottom">10</property>
+            <property name="active">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

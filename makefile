@@ -1,6 +1,6 @@
 CFLAGS :=-g -Wall -export-dynamic
 CXXFLAGS :=-g -Wall -export-dynamic
-C_SOURCES := main.c window_switcher.c mainmenu.c registration.c config.c new_nfc.c new_qr.c misc.c json.c network.c
+C_SOURCES := main.c window_switcher.c mainmenu.c registration.c config.c new_nfc.c new_qr.c misc.c json.c network.c sending.c
 CXX_SOURCES := picc_emulation_write.cpp
 C_EXECUTABLE=absen
 CXX_EXECUTABLE=picc_emulation_write

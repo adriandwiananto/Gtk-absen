@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	registrationwindow = g_slice_new(RegistrationWindow);
 	newNFCwindow = g_slice_new(NewAbsentWindow);
 	newQRwindow = g_slice_new(NewAbsentWindow);
+	sendingWindow = g_slice_new(SendingWindow);
 	
 	/* check config integrity */
 	config_status = config_checking();
@@ -28,6 +29,7 @@ int main(int argc, char *argv[])
 	if(init_registration_window() == FALSE) return 1;
 	if(init_newnfc_window() == FALSE) return 1;
 	if(init_newqr_window() == FALSE) return 1;
+	if(init_sending_window() == FALSE) return 1;
 	
 	/* open gtk window according to the result of config file checking */
 	switch(config_status)
@@ -59,6 +61,7 @@ int main(int argc, char *argv[])
 	g_slice_free(RegistrationWindow, registrationwindow);
 	g_slice_free(NewAbsentWindow, newQRwindow);
 	g_slice_free(NewAbsentWindow, newNFCwindow);
+	g_slice_free(SendingWindow, sendingWindow);
 	
 	return 0;
 }

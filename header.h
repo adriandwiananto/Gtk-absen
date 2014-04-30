@@ -34,20 +34,14 @@
 #define f_new_nfc_window			WindowSwitcherFlag.bit1
 #define f_new_qr_window				WindowSwitcherFlag.bit2
 #define f_registration_window		WindowSwitcherFlag.bit3
+#define f_sending_window			WindowSwitcherFlag.bit4
 #define f_status_window 			WindowSwitcherFlag.status
-
 
 typedef struct
 {
 	char *ptr;
 	size_t len;
 }ResponseString;
-
-//~ typedef struct
-//~ {
-	//~ unsigned char* KeyEncryptionKey[32];
-	//~ unsigned char* LogKey[32];
-//~ }CryptoKey;
 
 typedef struct
 {
@@ -100,6 +94,8 @@ typedef struct
 {
 	GtkWidget *window;
 	GtkWidget *SESN_label;
+	GtkWidget *continue_button;
+	GtkWidget *cancel_button;
 }NewAbsentWindow;
 
 typedef struct
@@ -109,6 +105,12 @@ typedef struct
 	GtkWidget *new_entry;
 	GtkWidget *confirm_entry;
 }RegistrationWindow;
+
+typedef struct
+{
+	GtkWidget *window;
+	GtkWidget *label;
+}SendingWindow;
 
 /*callback function*/
 void on_new_qr_continue_button_clicked();
@@ -123,6 +125,7 @@ gboolean init_mainmenu_window();
 gboolean init_registration_window();
 gboolean init_newnfc_window();
 gboolean init_newqr_window();
+gboolean init_sending_window();
 
 /*libconfig function*/
 int config_checking();
@@ -131,7 +134,7 @@ gboolean create_new_config_file(uintmax_t ACCN, char *HWID);
 //~ gboolean get_string_from_config(char *value, const char *path);
 //~ gboolean write_string_to_config(char *value, const char *path);
 //~ gboolean write_int64_to_config(uintmax_t value, const char *path);
-//~ uintmax_t get_ACCN(gchar* ACCN_inString);
+uintmax_t get_ACCN(gchar* ACCN_inString);
 
 /*crypto function*/
 //~ void passwordhashing(char *hashed, const gchar *password, const gchar *salt);
@@ -165,10 +168,12 @@ void nfc_poll_child_process(gchar *SESN);
 
 /*network function*/
 gboolean send_reg_jsonstring_to_server(const char* jsonString, const char* serverName);
+gboolean send_absen_jsonstring_to_server(const char* ACCNM, const char* HWID, const char* ACCNP, const char* timestamp, const char* serverName);
 //~ gboolean send_log_jsonstring_to_server(gchar* aesKeyString, const char* jsonHeader, const char* jsonLogs, const char* serverName, int* return_balance);
 
 /*json function*/
 json_object* create_registration_json(uintmax_t ACCN, int HWID);
+json_object* create_absen_json();
 //~ const char* get_key_inString_from_json_response(json_object* jobj);
 //~ json_object* create_log_as_json_object();
 
@@ -185,6 +190,11 @@ gboolean get_USB_reader_HWID (char* hwid);
 void print_array_inHex(const char* caption, unsigned char* array, int size);
 //~ void create_merch_req_png();
 gboolean parse_transaction_frame(unsigned char *payload);
+//~ void build_and_send_absenData();
+gpointer build_and_send_absenData(gpointer nothing);
+
+/*thread ui update*/
+gboolean sending_finish(gpointer message);
 
 #ifndef DECLARE_VARIABLES
 #define EXTERN /* nothing */
@@ -197,11 +207,12 @@ EXTERN MainMenuWindow *mainmenuwindow;
 EXTERN NewAbsentWindow *newNFCwindow;
 EXTERN RegistrationWindow *registrationwindow;
 EXTERN NewAbsentWindow *newQRwindow;
+EXTERN SendingWindow *sendingWindow;
 
 /*global variable*/
 EXTERN GPid nfc_poll_pid;
 //~ EXTERN GPid nfc_receipt_pid;
-//~ EXTERN GPid qr_zbar_pid;
+EXTERN GPid qr_zbar_pid;
 //~ EXTERN char nfc_data[128];
 EXTERN absenteeData lastAbsentData;
 //~ EXTERN CryptoKey cryptoKey;
