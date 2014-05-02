@@ -64,11 +64,6 @@ gpointer build_and_send_absenData(gpointer nothing)
 
 gboolean sending_finish(gpointer message)
 {
-	Bitwise WindowSwitcherFlag;
-	f_status_window = FALSE;	//hide all window
-	f_main_window = TRUE;		//show password window
-	WindowSwitcher(WindowSwitcherFlag);
-
 	if(!strcmp((const char*)message, "Success!"))
 	{
 		notification_message((const gchar*)message);
@@ -77,6 +72,10 @@ gboolean sending_finish(gpointer message)
 	{
 		error_message((const gchar*) message);
 	}
-		
+	Bitwise WindowSwitcherFlag;
+	f_status_window = FALSE;	//hide all window
+	f_main_window = TRUE;		//show password window
+	WindowSwitcher(WindowSwitcherFlag);
+			
 	return FALSE;
 }

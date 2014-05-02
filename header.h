@@ -136,62 +136,28 @@ gboolean create_new_config_file(uintmax_t ACCN, char *HWID);
 //~ gboolean write_int64_to_config(uintmax_t value, const char *path);
 uintmax_t get_ACCN(gchar* ACCN_inString);
 
-/*crypto function*/
-//~ void passwordhashing(char *hashed, const gchar *password, const gchar *salt);
-//~ char *unbase64(unsigned char *input, int length);
-//~ char *base64(const unsigned char *input, int length);
-//~ gboolean wrap_aes_key(unsigned char *out, unsigned char *wrapper_key, unsigned char *key_to_wrap);
-//~ gboolean unwrap_aes_key(unsigned char *out, unsigned char *wrapper_key, unsigned char *key_to_unwrap);
-//~ gboolean derive_key(unsigned char *out, const gchar *password, const gchar *salt, unsigned int iteration);
-//~ void getTransKey(unsigned char* aes_key, const gchar* password, const gchar* ACCN, gboolean printResult);
-//~ gboolean decrypt_transaction_frame(unsigned char* output, unsigned char* input, unsigned char* IV);
-//~ gboolean getLogKey(unsigned char* logKey);
-//~ void json_log_array_hashing(char *hashed, const char *json_array);
-//~ int calc_sha256_of_file (char* path, char output[65]);
-//~ gboolean build_receipt_packet(gchar* receipt_ndef_str);
-//~ void aes256cbc(unsigned char* output, unsigned char* input, unsigned char* key, unsigned char* IV, const char* mode);
-
 /*spawn function*/
 void nfc_poll_child_process(gchar *SESN);
-//~ void spawn_nfc_receipt_process(gchar* receipt_ndef);
-//~ void qr_zbar_child_process();
-
-/*log function*/
-//~ gboolean createDB_and_table();
-//~ gboolean write_lastTransaction_log();
-//~ gboolean encrypt_lastTransaction_log(unsigned char* logHexInStr, unsigned int logNum);
-//~ int read_log_blob(unsigned char *dest, int row);
-//~ int logNum();
-//~ void convert_DBdata_to_TreeView_Data(unsigned char *DB_BLOB_data, int logLen, unsigned int *lognum, char *timebuffer, uintmax_t *senderACCN, unsigned int*amount);
-//~ gboolean update_encrypted_log(char* logToWriteInStr, int Row);
-//~ gboolean clear_DB_entry();
 
 /*network function*/
 gboolean send_reg_jsonstring_to_server(const char* jsonString, const char* serverName);
 gboolean send_absen_jsonstring_to_server(const char* ACCNM, const char* HWID, const char* ACCNP, const char* timestamp, const char* serverName);
-//~ gboolean send_log_jsonstring_to_server(gchar* aesKeyString, const char* jsonHeader, const char* jsonLogs, const char* serverName, int* return_balance);
 
 /*json function*/
 json_object* create_registration_json(uintmax_t ACCN, int HWID);
 json_object* create_absen_json();
-//~ const char* get_key_inString_from_json_response(json_object* jobj);
-//~ json_object* create_log_as_json_object();
 
 /*other function*/
-//~ void read_pwd_entry();
 void error_message (const gchar *message);
 void notification_message (const gchar *message);
 void WindowSwitcher(Bitwise WindowSwitcherFlag);
 int random_number_generator(int min_number, int max_number);
-//~ void parse_log_file_and_write_to_treeview(int startRow, int endRow);
 void hexstrToBinArr(unsigned char* dest, gchar* source, gsize destlength);
 gboolean get_USB_reader_HWID (char* hwid);
-//~ gboolean create_receipt_from_lastTransactionData();
 void print_array_inHex(const char* caption, unsigned char* array, int size);
-//~ void create_merch_req_png();
 gboolean parse_transaction_frame(unsigned char *payload);
-//~ void build_and_send_absenData();
 gpointer build_and_send_absenData(gpointer nothing);
+gboolean absen_valid_data(gpointer nothing);
 
 /*thread ui update*/
 gboolean sending_finish(gpointer message);

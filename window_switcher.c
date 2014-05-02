@@ -12,7 +12,7 @@ void WindowSwitcher(Bitwise WindowSwitcherFlag)
 	{
 		gtk_main_quit();
 	}
-		
+	
 	/*main menu window switcher*/
 	(f_main_window == TRUE)?gtk_widget_show(mainmenuwindow->window):gtk_widget_hide(mainmenuwindow->window);
 	
@@ -68,7 +68,7 @@ void WindowSwitcher(Bitwise WindowSwitcherFlag)
 	if(f_sending_window == TRUE)
 	{
 		gtk_widget_show(sendingWindow->window);
-		//~ build_and_send_absenData();
+		//build_and_send_absenData(NULL);
 		g_thread_new("send",build_and_send_absenData,NULL);
 	}
 	else

@@ -1,7 +1,5 @@
 #include "header.h"
 
-static gboolean qr_valid_data(gpointer nothing);
-
 /*
 We call init_mainmenu_window() when our program is starting to load 
 main menu window with references to Glade file. 
@@ -117,11 +115,12 @@ static gboolean cb_out_watch( GIOChannel *channel, GIOCondition cond, GString *d
 			memcpy(detect_str,data->str,8);
 			if(!strcmp(detect_str,"QR-Code:"))
 			{
+				kill_qr_poll_process();
 				if(parse_qr_data(data) == TRUE)
 				{
-					kill_qr_poll_process();
+					//~ kill_qr_poll_process();
 					
-					g_idle_add(qr_valid_data, NULL);
+					g_idle_add(absen_valid_data, NULL);
 				}
 			}
 			
@@ -220,7 +219,7 @@ void on_new_qr_cancel_button_clicked()
 	WindowSwitcher(WindowSwitcherFlag);
 }
 
-static gboolean qr_valid_data(gpointer nothing)
+gboolean absen_valid_data(gpointer nothing)
 {
 	Bitwise WindowSwitcherFlag;
 	f_status_window = FALSE;

@@ -174,8 +174,6 @@ static void cb_child_watch( GPid pid, gint status, GString *data )
 {
 	data = g_string_new(NULL);
 	
-	//~ gtk_widget_hide(newtransNFCwindow->window);
-
 	if (WIFEXITED(status))
 	{
 		switch(WEXITSTATUS(status))
@@ -212,8 +210,6 @@ static void cb_child_watch( GPid pid, gint status, GString *data )
     g_spawn_close_pid( pid );
     
     g_string_free(data,TRUE);
-    
-    on_new_nfc_cancel_button_clicked();
 }
 
 /* io out watch callback */
@@ -246,13 +242,10 @@ static gboolean cb_out_watch( GIOChannel *channel, GIOCondition cond, GString *d
 			memcpy(detect_str,data->str,5);
 			if(!strcmp(detect_str,"DATA:"))
 			{
+				kill_nfc_poll_process();
 				if(parse_nfc_data(data) == TRUE)
 				{
-					Bitwise WindowSwitcherFlag;
-					f_status_window = FALSE;
-					f_sending_window = TRUE;
-					f_main_window = TRUE;
-					WindowSwitcher(WindowSwitcherFlag);
+					g_idle_add(absen_valid_data, NULL);
 				}
 			}
 			
