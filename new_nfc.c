@@ -204,6 +204,8 @@ static void cb_child_watch( GPid pid, gint status, GString *data )
 				error_message("Transaction failed! error:99");
 				break;
 		}
+		
+		if(WEXITSTATUS(status) > 0) on_new_nfc_cancel_button_clicked();
 	}
 	
 	/* Close pid */
